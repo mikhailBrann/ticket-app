@@ -1,0 +1,54 @@
+version: "3.8"
+services:
+    # Database service
+    database:
+      container_name: ${APP_CONTAINER_NAME}_db
+      image: postgres:11.0-alpine
+      networks:
+        - ticket-app-network
+      volumes:
+        - ./db:/var/lib/postgresql/data
+      ports:
+            - $POSTGRESS_DB_PORT:5432
+      environment:
+        DEBUG: 'false'
+      env_file:
+        - .env
+
+    # PHP service
+    api:
+        build: ./php
+        container_name: ${APP_CONTAINER_NAME}_php
+        ports:
+            - $API_PORT:$API_PORT
+        working_dir: /var/www/
+        volumes:
+            - ./api:/var/www
+            - ./php/config/php.ini:/opt/bitnami/php/lib/php.ini
+        env_file:
+            - .env
+        depends_on:
+            - database
+        networks:
+            - ticket-app-network
+
+    # Nginx service
+    nginx:
+        image: nginx:alpine
+        container_name: ${APP_CONTAINER_NAME}_nginx
+        ports:
+            - $API_NGINX_PORT:80
+        volumes:
+            - ./api:/var/www
+            - ./nginx/conf.d/:/etc/nginx/conf.d/
+            - ./logs/nginx:/var/log/nginx
+        env_file:
+            - .env
+        depends_on:
+            - api
+        networks:
+            - ticket-app-network
+
+networks:
+    ticket-app-network:
+        driver: bridge

@@ -7,6 +7,7 @@ namespace App\MoonShine\Layouts;
 use MoonShine\Laravel\Layouts\CompactLayout;
 use MoonShine\ColorManager\ColorManager;
 use MoonShine\Contracts\ColorManager\ColorManagerContract;
+use MoonShine\MenuManager\MenuItem;
 use MoonShine\Laravel\Components\Layout\{Locales, Notifications, Profile, Search};
 use MoonShine\UI\Components\{Breadcrumbs,
     Components,
@@ -30,6 +31,8 @@ use MoonShine\UI\Components\{Breadcrumbs,
     Layout\TopBar,
     Layout\Wrapper,
     When};
+use App\MoonShine\Resources\CinemaHallResource;
+use App\MoonShine\Resources\FilmResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -44,6 +47,17 @@ final class MoonShineLayout extends CompactLayout
     {
         return [
             ...parent::menu(),
+            // MenuItem::make(
+            //     static fn () => __('moonshine::ui.resource.admins_title'),
+            //     \App\MoonShine\Resources\MoonShineUserResource::class
+            // ),
+            // MenuItem::make(
+            //     static fn () => __('moonshine::ui.resource.role_title'),
+            //     \App\MoonShine\Resources\MoonShineUserRoleResource::class
+            // ),
+
+            MenuItem::make('Кинозалы', CinemaHallResource::class),
+            MenuItem::make('Films', FilmResource::class),
         ];
     }
 

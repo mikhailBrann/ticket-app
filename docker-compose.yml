@@ -9,7 +9,7 @@ services:
       volumes:
         - ./db:/var/lib/postgresql/data
       ports:
-            - $POSTGRESS_DB_PORT:5432
+        - $POSTGRESS_DB_PORT:5432
       environment:
         DEBUG: 'false'
       env_file:

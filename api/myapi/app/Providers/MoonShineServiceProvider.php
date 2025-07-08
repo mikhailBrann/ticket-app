@@ -11,6 +11,8 @@ use MoonShine\Laravel\DependencyInjection\MoonShine;
 use MoonShine\Laravel\DependencyInjection\MoonShineConfigurator;
 use App\MoonShine\Resources\MoonShineUserResource;
 use App\MoonShine\Resources\MoonShineUserRoleResource;
+use App\MoonShine\Resources\CinemaHallResource;
+use App\MoonShine\Resources\FilmResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -25,6 +27,8 @@ class MoonShineServiceProvider extends ServiceProvider
             ->resources([
                 MoonShineUserResource::class,
                 MoonShineUserRoleResource::class,
+                CinemaHallResource::class,
+                FilmResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

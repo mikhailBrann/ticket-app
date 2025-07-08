@@ -20,3 +20,8 @@ DB_USERNAME=ticket-app_user
 DB_PASSWORD=ticket-app_user
 # laravel setup end
 ```
+
+## админ-панель
+
+для админ панели используется панель [moonshine](https://moonshine-laravel.com/ru/docs/3.x/index), доступно по url: /admin
+

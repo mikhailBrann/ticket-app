@@ -13,6 +13,7 @@ use App\MoonShine\Resources\MoonShineUserResource;
 use App\MoonShine\Resources\MoonShineUserRoleResource;
 use App\MoonShine\Resources\CinemaHallResource;
 use App\MoonShine\Resources\FilmResource;
+use App\MoonShine\Resources\SessionInHallResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -29,6 +30,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 MoonShineUserRoleResource::class,
                 CinemaHallResource::class,
                 FilmResource::class,
+                SessionInHallResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MoonShine\Pages\CinemaHall;
 
 use App\Models\CinemaHall;
+use App\MoonShine\Layouts\Parts\CardLayout;
 use Illuminate\Database\Eloquent\Collection;
 use MoonShine\Laravel\Pages\Crud\DetailPage;
 use MoonShine\Contracts\UI\ComponentContract;
@@ -68,29 +69,18 @@ class CinemaHallDetailPage extends DetailPage
     {
         /** @var CinemaHall $hall */
         $hall = $this->getResource()->getItem();
-        $buttonText = $hall->is_active ? 'Деактивировать зал' : 'Активировать зал';
-
-        $toggleButton = ActionButton::make(
-            $buttonText, 
-            "/admin/resource/cinema-hall-resource/cinema-hall-index-page")
-            ->onClick(function() use ($hall) {
-                $hall->is_active = !$hall->is_active;
-                $hall->save();
-            }
-        );
+        $hallStatus = $hall->is_active ? 'Зал активен' : 'Зал не активен';
 
         return [
             Heading::make('Информация о кинозале'),
-            // Основная информация о кинозале
             Box::make( [
-          
                 Grid::make([
                     Column::make([
-                        $toggleButton,
-                        $this->createInfoCard('ID', $hall->id),
-                        $this->createInfoCard('Название', $hall->name),
-                        $this->createInfoCard('Количество рядов', $hall->rows_number),
-                        $this->createInfoCard('Мест в ряду', $hall->seats_in_row),
+                        CardLayout::createInfoCard('ID', $hall->id),
+                        CardLayout::createInfoCard('Активность', $hallStatus),
+                        CardLayout::createInfoCard('Название', $hall->name),
+                        CardLayout::createInfoCard('Количество рядов', $hall->rows_number),
+                        CardLayout::createInfoCard('Мест в ряду', $hall->seats_in_row),
                     ])->columnSpan(2),
                     // Схема зала
                     Column::make([

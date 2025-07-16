@@ -33,6 +33,7 @@ use MoonShine\UI\Components\{Breadcrumbs,
     When};
 use App\MoonShine\Resources\CinemaHallResource;
 use App\MoonShine\Resources\FilmResource;
+use App\MoonShine\Resources\SessionInHallResource;
 
 final class MoonShineLayout extends CompactLayout
 {
@@ -57,7 +58,8 @@ final class MoonShineLayout extends CompactLayout
             // ),
 
             MenuItem::make('Кинозалы', CinemaHallResource::class),
-            MenuItem::make('Films', FilmResource::class),
+            MenuItem::make('Сеансы', SessionInHallResource::class),
+            MenuItem::make('Фильмы', FilmResource::class),
         ];
     }
 

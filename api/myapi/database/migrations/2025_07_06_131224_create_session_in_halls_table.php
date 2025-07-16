@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->dateTime('session_time');
             $table->foreignId('film_id')
+                ->nullable()
                 ->constrained('films')
                 ->onDelete('cascade');
             $table->foreignId('cinema_hall_id')

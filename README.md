@@ -24,4 +24,6 @@ DB_PASSWORD=ticket-app_user
 ## админ-панель
 
 для админ панели используется панель [moonshine](https://moonshine-laravel.com/ru/docs/3.x/index), доступно по url: /admin
+создать пользователя
+php artisan moonshine:user
 

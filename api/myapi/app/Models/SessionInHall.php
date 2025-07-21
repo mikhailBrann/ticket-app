@@ -6,6 +6,7 @@ use Date;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class SessionInHall extends Model
 {
@@ -14,13 +15,15 @@ class SessionInHall extends Model
     protected $table = 'session_in_halls';
 
     protected $fillable = [
-        'session_time',
-        'film_id',
+        'from',
+        'to',
         'cinema_hall_id',
+        'film_id',
     ];
 
     protected $casts = [
-        'session_time' => 'datetime',
+        'from' => 'datetime',
+        'to' => 'datetime',
     ];
 
     public function film(): BelongsTo
@@ -62,4 +65,33 @@ class SessionInHall extends Model
             $this->getSessionDateFormattedAttribute() . ' ' .
             'в зале ' .  $cinemaHall->name . " (id: {$cinemaHall->id})";
     }
+
+    /**
+     * Связь с ценами
+     */
+    public function prices(): HasMany
+    {
+        return $this->hasMany(Price::class);
+    }
+
+    /**
+     * Получить все цены для этого сеанса
+     */
+    public function getAllPrices()
+    {
+        return $this->prices()
+            ->with('cinemaHall')
+            ->get();
+    }
+
+    /**
+     * Получить цену для конкретного типа места
+     */
+    public function getPriceForSeatType($seatType)
+    {
+        return $this->prices()
+            ->where('seat_type', $seatType)
+            ->first();
+    }
+    
 }

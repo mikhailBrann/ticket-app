@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class CinemaHall extends Model
 {
@@ -69,5 +70,23 @@ class CinemaHall extends Model
                 $cinemaHall->createSeats();
             }
         });
+    }
+
+    /**
+     * Связь с ценами
+     */
+    public function prices(): HasMany
+    {
+        return $this->hasMany(Price::class);
+    }
+
+    /**
+     * Получить цены для конкретного сеанса в этом зале
+     */
+    public function getPricesForSession($sessionInHallId)
+    {
+        return $this->prices()
+            ->where('session_in_hall_id', $sessionInHallId)
+            ->get();
     }
 }

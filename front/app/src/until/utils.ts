@@ -35,5 +35,41 @@ const changeRenderDateElem = (dateValue: string) => {
     };
 }
 
+function getDayWeeksArr(day = new Date(), direction = 'next') {
+    const dateArray = [];
+
+    switch (direction) {
+        case 'next':
+            for (let i = 0; i < 7; i++) {
+                const nextDate = new Date(day);
+
+                nextDate.setDate(day.getDate() + i);
+                dateArray.push(
+                    changeRenderDateElem(nextDate.toLocaleDateString())
+                );
+            }
+            break;
+        case 'prev':
+            for (let i = 7; i >= 1; i--) {
+                const nextDate = new Date(day);
+
+                nextDate.setDate(day.getDate() - i);
+                dateArray.push(
+                    changeRenderDateElem(nextDate.toLocaleDateString())
+                );
+            }
+            break;
+        default:
+            break;
+    }
+    
+    return dateArray;
+}
+
 export type {DateArray}
-export {setFormattedDate, checkCurrentDateInArr, changeRenderDateElem}
+export {
+    setFormattedDate, 
+    checkCurrentDateInArr, 
+    changeRenderDateElem, 
+    getDayWeeksArr
+}

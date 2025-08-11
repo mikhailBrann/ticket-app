@@ -4,44 +4,9 @@ import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../hooks/defaultHook.tsx';
 import { setCurrentDate } from "../redux/slices/SessionHallSlice";
 import type {DateArray} from '../until/utils'
-import {setFormattedDate, checkCurrentDateInArr, changeRenderDateElem} from '../until/utils'
-
-
-
-
-function getDayWeeksArr(day = new Date(), direction = 'next') {
-    const dateArray = [];
-
-    switch (direction) {
-        case 'next':
-            for (let i = 0; i < 7; i++) {
-                const nextDate = new Date(day);
-
-                nextDate.setDate(day.getDate() + i);
-                dateArray.push(
-                    changeRenderDateElem(nextDate.toLocaleDateString())
-                );
-            }
-            break;
-        case 'prev':
-            for (let i = 7; i >= 1; i--) {
-                const nextDate = new Date(day);
-
-                nextDate.setDate(day.getDate() - i);
-                dateArray.push(
-                    changeRenderDateElem(nextDate.toLocaleDateString())
-                );
-            }
-            break;
-        default:
-            break;
-    }
-    
-    return dateArray;
-}
+import {setFormattedDate, checkCurrentDateInArr, getDayWeeksArr} from '../until/utils'
 
 const SessionDay = () => {
-    
     const [calendarDaysArr, setCalendarDaysArr] = useState<DateArray>([]);
     const [prevWeek, setPrevWeekStatus] = useState(false);
     const { 

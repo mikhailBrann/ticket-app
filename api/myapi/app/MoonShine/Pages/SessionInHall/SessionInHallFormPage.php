@@ -12,6 +12,7 @@ use MoonShine\Laravel\Pages\Crud\FormPage;
 use MoonShine\Contracts\UI\ComponentContract;
 use MoonShine\Contracts\UI\FieldContract;
 use MoonShine\Laravel\Resources\ModelResource;
+use Illuminate\Http\Request;
 use Throwable;
 
 
@@ -76,6 +77,9 @@ class SessionInHallFormPage extends FormPage
      */
     protected function fields(): iterable
     {
+        /** @var SessionInHall $hall */
+        $currentSessionHall = $this->getResource()->getItem();
+
         return [
             Box::make([
                 ID::make(),
@@ -105,41 +109,51 @@ class SessionInHallFormPage extends FormPage
             Divider::make(),
             Box::make(
                 'Настройка цен по типам мест', 
-                $this->getPriceFields()
+                $this->getPriceFields($currentSessionHall)
             ),
 
         ];
     }
 
-
-    
-
     /**
      * Получить поля для настройки цен
      */
-    private static function getPriceFields(): array
+    private function getPriceFields(SessionInHall|null $currentSessionHall): array
     {
         $seatTypes = SessionInHallResource::getAvailableSeatTypes();
+        
+        $currentPrice = $currentSessionHall !== null ? 
+            Price::where(
+            "session_in_hall_id", 
+            $currentSessionHall->id
+            )->where(
+                "cinema_hall_id", 
+                $currentSessionHall->cinema_hall_id
+            )
+            ->get()
+            ->toArray() : [];
         $priceFields = [];
 
         foreach ($seatTypes as $seatType) {
-            $sessionPriceTemp = session()
-                ->get("session_prices_temp");
-
+            $priceFilterArr = array_filter(
+                $currentPrice, 
+                function($item) use($seatType) {
+                    return $item['seat_type'] === $seatType;
+                }) ?? [];
+            $findCurrentPrice = array_shift( $priceFilterArr);
             $makedField = Number::make(
                 'Цена для ' . $seatType, 
                 'price_' . $seatType
             )
             ->min(0)
-            ->step(0.01)
-            //->placeholder('Введите цену для типа мест: ' . $seatType)
+            ->step(1)
             ->hint('Цена в рублях для мест типа "' . $seatType . '"');
 
-            if(is_array($sessionPriceTemp) && 
-                !empty($sessionPriceTemp[$seatType])
-            ) {
-                $makedField->placeholder($sessionPriceTemp[$seatType]);
-            }
+            if(!empty($findCurrentPrice)) {
+                $makedField->default($findCurrentPrice["price"]);
+            } else {
+                $makedField->placeholder("Введите цену для типа мест: $seatType");
+            }       
 
             $priceFields[] = $makedField;
         }
@@ -151,5 +165,39 @@ class SessionInHallFormPage extends FormPage
         }
 
         return $priceFields;
+    }
+
+    /**
+     * Переопределяем метод сохранения, чтобы удалить поля price_*
+     */
+    public function save(Request $request): Model
+    {
+        // Удаляем из запроса все поля, начинающиеся с price_
+        // foreach ($request->all() as $key => $value) {
+        //     if (str_starts_with($key, 'price_')) {
+        //         $request->request->remove($key);
+        //     }
+        // }
+
+        file_put_contents("./test_save.txt", print_r($request->all(), true));
+
+        // Вызываем родительский метод сохранения с очищенным запросом
+        return parent::save($request);
+    }
+
+    /**
+     * Переопределяем метод обновления, чтобы удалить поля price_*
+     */
+    public function update(Request $request, Model $item): Model
+    {
+        // foreach ($request->all() as $key => $value) {
+        //     if (str_starts_with($key, 'price_')) {
+        //         $request->request->remove($key);
+        //     }
+        // }
+
+        file_put_contents("./test_update.txt", print_r($request->all(), true));
+
+        return parent::update($request, $item);
     }
 }

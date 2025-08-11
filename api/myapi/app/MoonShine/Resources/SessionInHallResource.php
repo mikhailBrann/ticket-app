@@ -27,6 +27,7 @@ use MoonShine\UI\Fields\ID;
 use MoonShine\UI\Fields\Number;
 use MoonShine\UI\Fields\Select;
 use MoonShine\UI\Fields\Text;
+use Symfony\Component\HttpFoundation\Request;
 use function PHPUnit\Framework\throwException;
 
 /**
@@ -66,7 +67,7 @@ class SessionInHallResource extends ModelResource
      */
     protected function beforeCreating(mixed $item): mixed
     {
-        self::cleanRequestFromRrices();
+        self::cleanRequestFromRrices(request());
 
         return $item;
     }
@@ -76,11 +77,11 @@ class SessionInHallResource extends ModelResource
      */
     protected function afterCreated(mixed $item): mixed
     {
-        $cinemaHallId = (int) $item->cinema_hall_id;
+        $cinemaHallId = $item->cinema_hall_id ?? null;
 
         self::updatePriceFromSession(
-            $item->id, 
-            $cinemaHallId
+            $item->id ?? null, 
+            $cinemaHallId ? (int) $cinemaHallId : null
         );
 
         return $item;
@@ -91,7 +92,7 @@ class SessionInHallResource extends ModelResource
      */
     protected function beforeUpdating(mixed $item): mixed
     {
-        self::cleanRequestFromRrices();
+        self::cleanRequestFromRrices(request());
 
         return $item;
     }
@@ -101,11 +102,11 @@ class SessionInHallResource extends ModelResource
      */
     protected function afterUpdated(mixed $item): mixed
     {
-        $cinemaHallId = (int) $item->cinema_hall_id;
+        $cinemaHallId = $item->cinema_hall_id ?? null;
 
         self::updatePriceFromSession(
-            $item->id, 
-            $cinemaHallId
+            $item->id ?? null, 
+            $cinemaHallId ? (int) $cinemaHallId : null
         );
         
         return $item;
@@ -129,10 +130,10 @@ class SessionInHallResource extends ModelResource
     /**
      * Чистим запрос от цен и времмено сохраняем в сессию
      */
-    private static function cleanRequestFromRrices():void
+    private static function cleanRequestFromRrices(Request $request):void
     {
-        $request = request();
         $priceFields = [];
+        $moonshineRequest = moonshineRequest();
 
         foreach (self::getAvailableSeatTypes() as $seatType) {
             $priceField = 'price_' . $seatType;
@@ -143,6 +144,7 @@ class SessionInHallResource extends ModelResource
             
             $priceFields[$seatType] = $request->request->get($priceField);
             $request->request->remove($priceField);
+            $moonshineRequest->request->remove($priceField);
         }
 
         if(session()->exists("session_prices_temp")) {
@@ -155,7 +157,7 @@ class SessionInHallResource extends ModelResource
     /**
      * Обновляем цены и удаляем их из сессии
      */
-    private static function updatePriceFromSession(int $sessionHallId, $cinemaHallId):void
+    private static function updatePriceFromSession(int|null $sessionHallId, int|null $cinemaHallId) 
     {
         $sessionCurrentPrice = session()
             ->pull("session_prices_temp", null);
@@ -181,7 +183,7 @@ class SessionInHallResource extends ModelResource
                 'price' => (float) $price,
             ]);
         }
-        
-        file_put_contents("./test3.txt", print_r($result, true));
+
+        return $result;
     }
 }

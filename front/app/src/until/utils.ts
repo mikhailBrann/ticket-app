@@ -1,0 +1,39 @@
+type DateArray = Array<{
+    number_val: number;
+    is_holiday: boolean;
+    day_text: string;
+    value: string;
+}>;
+
+const setFormattedDate = (dateValue: string) => {
+    const dateParts = dateValue.split('.');
+    const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+
+    return formattedDate;
+}
+
+const checkCurrentDateInArr = (dateValue: string, dateArray: DateArray) => {
+    return dateArray
+        .find(elem => elem.value == setFormattedDate(dateValue)) 
+        ?? false;
+}
+
+const changeRenderDateElem = (dateValue: string) => {
+    const formattedDate = setFormattedDate(dateValue);
+    const date = new Date(formattedDate);
+    const numberVal = date.getDate();
+    const dayOfWeek = date.getDay();
+    const isHoliday = dayOfWeek === 0 || dayOfWeek === 6;
+    const daysOfWeek = ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'];
+    const dayText = daysOfWeek[dayOfWeek];
+    
+    return {
+        "number_val": numberVal,
+        "is_holiday": isHoliday,
+        "day_text": dayText,
+        "value": formattedDate
+    };
+}
+
+export type {DateArray}
+export {setFormattedDate, checkCurrentDateInArr, changeRenderDateElem}

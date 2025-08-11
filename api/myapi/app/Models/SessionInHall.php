@@ -93,5 +93,18 @@ class SessionInHall extends Model
             ->where('seat_type', $seatType)
             ->first();
     }
-    
+
+    /**
+     * Удаляем лишние поля перед сохранением модельки
+     */
+    public function save(array $options = [])
+    {
+        foreach ($this->attributes as $key => $value) {
+            if (strpos($key, 'price_') === 0) {
+                unset($this->attributes[$key]);
+            }
+        }
+
+        return parent::save($options);
+    }
 }

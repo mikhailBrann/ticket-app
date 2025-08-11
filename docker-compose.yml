@@ -49,6 +49,23 @@ services:
         networks:
             - ticket-app-network
 
+    # Front service
+    front:
+        build:
+          context: ./front
+          dockerfile: Dockerfile
+        container_name: ${APP_CONTAINER_NAME}_front
+        ports:
+            - $FRONT_PORT:$FRONT_PORT
+        volumes:
+            - ./front/app:/app
+        restart: always
+        command: tail -f /dev/null
+        env_file:
+            - .env
+        networks:
+            - ticket-app-network
+
 networks:
     ticket-app-network:
         driver: bridge

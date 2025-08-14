@@ -6,6 +6,7 @@ use Date;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Film extends Model
 {
@@ -17,6 +18,11 @@ class Film extends Model
         'title',
         'description',
         'image',
+    ];
+
+    protected $appends = [
+        'image_url',
+        'duration'
     ];
 
     public function getImageUrlAttribute(): ?string
@@ -48,5 +54,17 @@ class Film extends Model
     public function sessionInHalls(): HasMany
     {
         return $this->hasMany(SessionInHall::class);
+    }
+
+    public function cinemaHalls(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            CinemaHall::class,
+            SessionInHall::class,
+            'film_id',
+            'id',
+            'id',
+            'cinema_hall_id'
+        );
     }
 }

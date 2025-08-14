@@ -5,11 +5,44 @@ type DateArray = Array<{
     value: string;
 }>;
 
+type SessionInHall = {
+  id: number;
+  cinema_hall_id: number;
+  film_id: number;
+  from: string; // ISO date string
+  to: string;   // ISO date string
+};
+
+type CinemaHall = {
+  id: number;
+  name: string;
+  laravel_through_key?: number; // optional, as it comes from hasManyThrough
+};
+
+type Film = {
+  id: number;
+  title: string;
+  description?: string;
+  image?: string;
+  image_url?: string;
+  duration?: string;
+  session_in_halls: SessionInHall[];
+  cinema_halls: CinemaHall[];
+};
+
 const setFormattedDate = (dateValue: string) => {
     const dateParts = dateValue.split('.');
     const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
 
     return formattedDate;
+}
+
+const getTimeFromDate = (dateValue: string) => {
+    const date = new Date(dateValue);
+    const hours = date.getUTCHours().toString().padStart(2, '0');
+    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
+
+    return `${hours}:${minutes}`;
 }
 
 const checkCurrentDateInArr = (dateValue: string, dateArray: DateArray) => {
@@ -66,10 +99,16 @@ function getDayWeeksArr(day = new Date(), direction = 'next') {
     return dateArray;
 }
 
-export type {DateArray}
+export type {
+    DateArray,
+    SessionInHall,
+    CinemaHall,
+    Film
+}
 export {
     setFormattedDate, 
     checkCurrentDateInArr, 
     changeRenderDateElem, 
-    getDayWeeksArr
+    getDayWeeksArr,
+    getTimeFromDate
 }

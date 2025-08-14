@@ -1,0 +1,4 @@
+Array
+(
+    [err] => Call to undefined method Illuminate\Database\Eloquent\Relations\HasMany::ditinct()
+)

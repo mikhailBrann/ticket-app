@@ -39,10 +39,14 @@ class CinemaHall extends Model
         
         for ($row = 1; $row <= $this->rows_number; $row++) {
             for ($seatNumber = 1; $seatNumber <= $this->seats_in_row; $seatNumber++) {
+                $seatNumberInHall = $row == 1 ? $seatNumber :
+                    (($row - 1) * $this->seats_in_row) + $seatNumber;
+
                 $seats[] = [
                     'cinema_hall_id' => $this->id,
                     'row' => $row,
                     'number' => $seatNumber,
+                    'seat_number' => $seatNumberInHall,
                     'type' => $row === 1 ? 'vip' : 'regular',
                     'created_at' => now(),
                     'updated_at' => now(),

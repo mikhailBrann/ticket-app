@@ -3,10 +3,12 @@ import classNames from 'classnames';
 import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../hooks/defaultHook.tsx';
 import { setCurrentDate } from "../redux/slices/SessionHallSlice";
-import type {DateArray} from '../until/utils'
-import {setFormattedDate, checkCurrentDateInArr, getDayWeeksArr} from '../until/utils'
+import { fetchFilms } from '../redux/slices/FilmsSlice.tsx';
+import type { DateArray } from '../until/utils'
+import { setFormattedDate, checkCurrentDateInArr, getDayWeeksArr } from '../until/utils'
 
 const SessionDay = () => {
+    const today = new Date().toLocaleDateString();
     const [calendarDaysArr, setCalendarDaysArr] = useState<DateArray>([]);
     const [prevWeek, setPrevWeekStatus] = useState(false);
     const { 
@@ -14,13 +16,14 @@ const SessionDay = () => {
     } = useAppSelector((state) => state.sessionHall);
     const dispatch = useAppDispatch();
 
-    const today = new Date().toLocaleDateString();
-
     useEffect(() => {
         if(localStorage.getItem("currentDate") !== null) {
-            dispatch(
-                setCurrentDate(localStorage.getItem("currentDate"))
-            );
+            let storageDate = localStorage.getItem("currentDate") || "";
+
+            dispatch(setCurrentDate(storageDate));
+            dispatch(fetchFilms(`changeDate=${storageDate}`));
+        } else {
+            dispatch(fetchFilms(`changeDate=${today}`));
         }
 
         setCalendarDaysArr(getDayWeeksArr());
@@ -69,10 +72,10 @@ const SessionDay = () => {
 
         if(value) {
             dispatch(setCurrentDate(value));
+            dispatch(fetchFilms(`changeDate=${value}`));
         }
     }
     
-
     return (
         <>
         {calendarDaysArr.length > 0 && (
@@ -99,28 +102,6 @@ const SessionDay = () => {
             </nav>
         )}
         </>
-        // <nav class="page-nav">
-        //     <a class="page-nav__day page-nav__day_today" href="#">
-        //     <span class="page-nav__day-week">Пн</span><span class="page-nav__day-number">31</span>
-        //     </a>
-        //     <a class="page-nav__day" href="#">
-        //     <span class="page-nav__day-week">Вт</span><span class="page-nav__day-number">1</span>
-        //     </a>
-        //     <a class="page-nav__day page-nav__day_chosen" href="#">
-        //     <span class="page-nav__day-week">Ср</span><span class="page-nav__day-number">2</span>
-        //     </a>
-        //     <a class="page-nav__day" href="#">
-        //     <span class="page-nav__day-week">Чт</span><span class="page-nav__day-number">3</span>
-        //     </a>
-        //     <a class="page-nav__day" href="#">
-        //     <span class="page-nav__day-week">Пт</span><span class="page-nav__day-number">4</span>
-        //     </a>
-        //     <a class="page-nav__day page-nav__day_weekend" href="#">
-        //     <span class="page-nav__day-week">Сб</span><span class="page-nav__day-number">5</span>
-        //     </a>
-        //     <a class="page-nav__day page-nav__day_next" href="#">
-        //     </a>
-        // </nav>
     );
 }
 

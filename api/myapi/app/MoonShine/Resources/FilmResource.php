@@ -20,6 +20,7 @@ use MoonShine\UI\Fields\Number;
 use MoonShine\UI\Fields\Select;
 use MoonShine\UI\Fields\Text;
 use MoonShine\UI\Components\Layout\Box;
+use MoonShine\UI\Fields\Textarea;
 
 /**
  * @extends ModelResource<Film, FilmIndexPage, FilmFormPage, FilmDetailPage>
@@ -53,11 +54,10 @@ class FilmResource extends ModelResource
                 ID::make(),
                 Text::make('Название фильма', 'title')
                     ->required(),
+                Textarea::make('Описание фильма', 'description')
+                    ->required(),
                 Image::make('Постер', 'image')
                     ->disk('public'),
-                Select::make('Сеанс', 'session_in_halls')
-                    ->required()
-                    ->options($options),
             ]),
         ];
     }

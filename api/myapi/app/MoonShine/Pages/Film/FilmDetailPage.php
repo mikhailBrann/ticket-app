@@ -73,6 +73,7 @@ class FilmDetailPage extends DetailPage
                 CardLayout::createInfoCard('Создан', $film->created_at),
                 CardLayout::createInfoCard('Изменен', $film->updated_at),
                 CardLayout::createInfoCard('Название', $film->title),
+                CardLayout::createInfoCard('Описание', $film->description),
                 $poster(),
                 CardLayout::createInfoCard('Продолжительность', '~' . $film->duration),
             ])

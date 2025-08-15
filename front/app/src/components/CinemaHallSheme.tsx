@@ -2,8 +2,8 @@ import uniqid from 'uniqid';
 import classNames from 'classnames';
 
 
-const CinemaHallSheme = ({seats, priceArr}) => {
-    console.log(priceArr);
+const CinemaHallSheme = ({seats, priceArr, onSeatClick}) => {
+    
     return (
         <>
         <div className="buying-scheme">
@@ -12,10 +12,14 @@ const CinemaHallSheme = ({seats, priceArr}) => {
                     <div className="buying-scheme__row">
                         {row.map((seat) => (
                             <span key={uniqid()}
+                                onClick={onSeatClick}
+                                data-seat-id={seat.id}
+                                data-test={seat.isChange}
                                 className={
                                     classNames('buying-scheme__chair', { 
                                         'buying-scheme__chair_vip': seat.type == 'vip',
                                         'buying-scheme__chair_standart': seat.type == 'regular',
+                                        'buying-scheme__chair_selected': seat.isChange == true
                                     })
                                 }>
                             </span>
@@ -44,7 +48,6 @@ const CinemaHallSheme = ({seats, priceArr}) => {
                 </div>
             </div>
         </div>
-        <button className="acceptin-button" >Забронировать</button>
         </>
     );
 }

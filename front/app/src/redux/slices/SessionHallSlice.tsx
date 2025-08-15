@@ -74,6 +74,7 @@ export const SessionHallSlice = createSliceWithThunk({
                     if(action.payload) {
                         state.sessionInHall = action.payload;
                         state.sessionInHallError = "";
+                        state.sessionInHallLoading = false;
                         return;
                     }
                 },

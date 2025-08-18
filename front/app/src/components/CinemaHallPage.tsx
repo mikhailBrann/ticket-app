@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '../hooks/defaultHook.tsx';
 import { fetchSessionInHall } from '../redux/slices/SessionHallSlice.tsx';
 import { getTimeFromDate } from '../until/utils.ts';
 import CinemaHallSheme from './CinemaHallSheme.tsx';
+import { current } from '@reduxjs/toolkit';
 
 const CinemaHallPage = () => {
     const { hall_id, session_id } = useParams();
@@ -56,10 +57,14 @@ const CinemaHallPage = () => {
         'summ',
         */
        const sendData = {
-
+        "film_id": currentSessionInHall?.film?.id,
+        "seat_id_list": changedSeats.map(seat => seat.id),
+        "cinema_hall_id": cinemaHall?.id,
+        "session_in_hall_id": currentSessionInHall?.id,
+        "summ": changedSeats.reduce((acc, currentElem) => acc + parseFloat(currentElem?.price), 0)
        };
 
-        console.log(changedSeats);
+        console.log(changedSeats, sendData);
     }
 
     const _fetchData = async () => {

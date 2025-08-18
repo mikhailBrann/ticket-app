@@ -99,6 +99,29 @@ function getDayWeeksArr(day = new Date(), direction = 'next') {
     return dateArray;
 }
 
+const fetcApi = async(
+    urlApiPath: string, 
+    method: string = "GET", 
+    data: any = null
+) => {
+    const url = import.meta.env.VITE_API_URL + urlApiPath;
+    const params = {
+        method,
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: ''
+    };
+
+    if(data !== null) {
+        params.body = JSON.stringify(data);
+    }
+
+    const response = await fetch(url, params);
+
+    return await response.json();
+};
+
 export type {
     DateArray,
     SessionInHall,
@@ -110,5 +133,6 @@ export {
     checkCurrentDateInArr, 
     changeRenderDateElem, 
     getDayWeeksArr,
-    getTimeFromDate
+    getTimeFromDate,
+    fetcApi
 }

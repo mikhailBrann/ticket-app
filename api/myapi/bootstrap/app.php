@@ -12,7 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'check.booking.authorization' => \App\Http\Middleware\CheckBookingAuthorization::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

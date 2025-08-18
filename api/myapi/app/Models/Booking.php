@@ -33,7 +33,7 @@ class Booking extends Model
     public static function rules()
     {
         return [
-            'is_active' => 'boolean',
+            'is_active' => 'nullable|boolean',
             'film_id' => 'required|exists:films,id',
             'seat_id_list' => 'required|array',
             'seat_id_list.*' => 'integer|exists:seats,id',

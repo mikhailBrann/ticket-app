@@ -19,7 +19,7 @@ return new class extends Migration
                 ->foreignId('film_id')
                 ->constrained('films')
                 ->cascadeOnDelete();
-            $table->json('seat_id_list');
+            $table->jsonb('seat_id_list');
             $table
                 ->foreignId('cinema_hall_id')
                 ->constrained()

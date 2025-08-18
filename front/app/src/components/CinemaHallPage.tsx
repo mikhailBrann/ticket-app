@@ -2,16 +2,18 @@ import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/defaultHook.tsx';
 import { fetchSessionInHall } from '../redux/slices/SessionHallSlice.tsx';
-import { getTimeFromDate } from '../until/utils.ts';
+import { fetcApi, getTimeFromDate } from '../until/utils.ts';
 import CinemaHallSheme from './CinemaHallSheme.tsx';
-import { current } from '@reduxjs/toolkit';
+import { useNavigate } from 'react-router-dom';
 
 const CinemaHallPage = () => {
     const { hall_id, session_id } = useParams();
     const [seatsList, setSeatsList] = useState([]);
     const [seatsIsLoaded, setSeatsIsLoaded] = useState(true);
+    const [fetchBookingErr, setFetchBookingErr] = useState(false);
     const [priceList, setpriceList] = useState([]);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const { 
         sessionInHall,
         sessionInHallError
@@ -46,25 +48,31 @@ const CinemaHallPage = () => {
         setSeatsList([...newSeatList]);
     }
 
-    const onSubmitBooking = () => {
-        const changedSeats = seatsList.flat().filter(seat => seat?.isChange === true);
-        /*
-        'is_active',
-        'film_id',
-        'seat_id_list',
-        'cinema_hall_id',
-        'session_in_hall_id',
-        'summ',
-        */
-       const sendData = {
-        "film_id": currentSessionInHall?.film?.id,
-        "seat_id_list": changedSeats.map(seat => seat.id),
-        "cinema_hall_id": cinemaHall?.id,
-        "session_in_hall_id": currentSessionInHall?.id,
-        "summ": changedSeats.reduce((acc, currentElem) => acc + parseFloat(currentElem?.price), 0)
-       };
+    const onSubmitBooking = async () => {
+        if(fetchBookingErr) {
+            return;
+        }
 
-        console.log(changedSeats, sendData);
+        const changedSeats = seatsList
+            .flat()
+            .filter(seat => seat?.isChange === true);
+        const sendData = {
+            "film_id": currentSessionInHall?.film?.id,
+            "seat_id_list": changedSeats.map(seat => seat.id),
+            "cinema_hall_id": cinemaHall?.id,
+            "session_in_hall_id": currentSessionInHall?.id,
+            "summ": changedSeats.reduce((acc, currentElem) => acc + parseFloat(currentElem?.price), 0)
+        };
+        const request = await fetcApi("/booking", "POST", sendData);
+
+        if(request?.code_err == 'dublicate') {
+            setFetchBookingErr(request.err + ' | alredy booking seats: ' + request.value);
+            setTimeout(() => setFetchBookingErr(false), 3000);
+        }
+
+        if(request?.booking_id) {
+            navigate("/payment/" + request.booking_id);
+        }
     }
 
     const _fetchData = async () => {
@@ -103,32 +111,35 @@ const CinemaHallPage = () => {
     
     return (
         <>
-          {seatsIsLoaded && <div>Loading...</div>}
-          {sessionInHallError && <div>Error: {sessionInHallError}</div>}
-          {!seatsIsLoaded && (() => {            
+            {seatsIsLoaded && <div>Loading...</div>}
+            {sessionInHallError && <div>Error: {sessionInHallError}</div>}
+            {!seatsIsLoaded && (() => {            
             return(
-              <main>
-                  <section className="buying">
-                      <div className="buying__info">
-                          <div className="buying__info-description">
-                          <h2 className="buying__info-title">{currentSessionInHall?.film?.title}</h2>
-                          <p className="buying__info-start">Начало сеанса: {sessionStart}</p>
-                          <p className="buying__info-hall">{cinemaHall?.name}</p>          
-                          </div>
-                          <div className="buying__info-hint">
-                              <p>Тапните дважды,<br/>чтобы увеличить</p>
-                          </div>
-                      </div>
-                      {seatsList.length > 0 && 
-                          <CinemaHallSheme
-                              onSeatClick={onSeatClick} 
-                              seats={seatsList} 
-                              priceArr={priceList}/>}
-                      <button className="acceptin-button" onClick={onSubmitBooking}>Забронировать</button>
-                  </section>
-              </main>
+                <main>
+                    <section className="buying">
+                        <div className="buying__info">
+                            <div className="buying__info-description">
+                            <h2 className="buying__info-title">{currentSessionInHall?.film?.title}</h2>
+                            <p className="buying__info-start">Начало сеанса: {sessionStart}</p>
+                            <p className="buying__info-hall">{cinemaHall?.name}</p>          
+                            </div>
+                            <div className="buying__info-hint">
+                                <p>Тапните дважды,<br/>чтобы увеличить</p>
+                            </div>
+                        </div>
+                        {seatsList.length > 0 && 
+                            <CinemaHallSheme
+                                onSeatClick={onSeatClick} 
+                                seats={seatsList} 
+                                priceArr={priceList}/>}
+                        <button className="acceptin-button" onClick={onSubmitBooking}>Забронировать</button>
+                    </section>
+                </main>
             );
-          })()}
+            })()}
+            {fetchBookingErr != false && (
+                <h3>{fetchBookingErr}</h3>
+            )}
       </>
     )
 }

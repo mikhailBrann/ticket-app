@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Arr;
+use Exception;
 use App\Models\Booking;
 use Illuminate\Http\Request;
 
@@ -28,7 +30,55 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $checkBooking = $this->checkBooking($request);
+
+            if($checkBooking != null) {
+                return response()->json(
+                    [
+                        "err" => "seats is already booked",
+                        "code_err" => "dublicate",
+                        "value" => $checkBooking["seat_id_list"],
+                    ], 
+                    403
+                );
+            }
+
+            $result = Booking::create($request->all());
+
+            return response()->json([
+                "booking_id" => $result->id,
+            ]);
+        } catch (Exception $e) {
+            return response()->json(
+                ["err" => $e->getMessage()], 
+                500
+            );
+        }
+    }
+
+    private function checkBooking(Request $request)
+    {
+        $filmId = $request->input("film_id");
+        $cinemaHallId = $request->input("cinema_hall_id");
+        $sessionInHallId = $request->input("session_in_hall_id");
+        $seatIdList = $request->input("seat_id_list");
+        
+        $booking = Booking::where("film_id", $filmId)
+            ->where("cinema_hall_id", $cinemaHallId)
+            ->where("session_in_hall_id", $sessionInHallId)
+            ->where(function($query) use ($seatIdList) {
+                foreach ($seatIdList as $seatId) {
+                    $query->orWhereRaw("seat_id_list @> ?", [json_encode([$seatId])]);
+                }
+            })
+            ->first();
+        
+        if ($booking) {
+            return $booking;
+        }
+        
+        return null;
     }
 
     /**

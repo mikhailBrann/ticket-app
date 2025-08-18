@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CinemaHallController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FilmController;
@@ -11,4 +12,6 @@ use App\Http\Controllers\FilmController;
 Route::prefix('v1')->group(function () {
     Route::get('films', [FilmController::class, 'index']);
     Route::get('hall/{cinemaHall}/session/{sessionInHall}', [CinemaHallController::class, 'show']);
+    Route::post('booking', [BookingController::class, 'store'])
+        ->middleware('check.booking.authorization');
 });

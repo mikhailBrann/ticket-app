@@ -17,15 +17,7 @@ const SessionDay = () => {
     const dispatch = useAppDispatch();
 
     useEffect(() => {
-        if(localStorage.getItem("currentDate") !== null) {
-            let storageDate = localStorage.getItem("currentDate") || "";
-
-            dispatch(setCurrentDate(storageDate));
-            dispatch(fetchFilms(`changeDate=${storageDate}`));
-        } else {
-            dispatch(fetchFilms(`changeDate=${today}`));
-        }
-
+        dispatch(fetchFilms(`changeDate=${today}`));
         setCalendarDaysArr(getDayWeeksArr());
     }, []);
 
@@ -87,7 +79,7 @@ const SessionDay = () => {
                     <a className={
                             classNames('page-nav__day', { 
                                 'page-nav__day_today': setFormattedDate(today) === item.value,
-                                'page-nav__day_chosen': currentDate === item.value
+                                'page-nav__day_chosen': currentDate == item.value
                             })
                         } 
                         href="#"

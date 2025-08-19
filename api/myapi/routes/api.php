@@ -14,4 +14,5 @@ Route::prefix('v1')->group(function () {
     Route::get('hall/{cinemaHall}/session/{sessionInHall}', [CinemaHallController::class, 'show']);
     Route::post('booking', [BookingController::class, 'store'])
         ->middleware('check.booking.authorization');
+    Route::get('payment/{booking}', [BookingController::class, 'show']);
 });

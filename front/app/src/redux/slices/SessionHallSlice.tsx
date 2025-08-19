@@ -92,7 +92,6 @@ export const SessionHallSlice = createSliceWithThunk({
                 setFormattedDate(newDate.toLocaleDateString());
 
             state.currentDate = formattedDateValue;
-            localStorage.setItem("currentDate", formattedDateValue);
         }
     })
 });

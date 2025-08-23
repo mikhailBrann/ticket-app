@@ -11,8 +11,8 @@ class CinemaHallController extends Controller
 {
     public function show(CinemaHall $cinemaHall, SessionInHall $sessionInHall)
     {
-        $sessionInHallResult = $sessionInHall::with('film:id,title' )->first();
-        $cinemaHallResult = $cinemaHall->select("id", "name")
+        $sessionInHallResult = $sessionInHall->load('film:id,title');
+        $cinemaHallResult = CinemaHall::select("id", "name")
             ->with([
                 'seats',  
                 'prices' => function($query) use($sessionInHallResult) {
@@ -20,6 +20,7 @@ class CinemaHallController extends Controller
                         ->distinct();
                 }
             ])
+            ->where('id', $cinemaHall->id)
             ->first();
         
 

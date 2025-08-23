@@ -66,18 +66,11 @@ class BookingController extends Controller
 
         try {
             $booking->load(["film", "cinemaHall", "sessionInHall"]);
-
+            $film = $booking->film;
             $sessionInHall = $booking->sessionInHall;
+            $cinemaHall = $booking->cinemaHall;
             $fromDate = Carbon::parse( $sessionInHall->from);
-            $nowDateUtc = Carbon::now();
-
-            return response()->json(
-                [
-                    "1" => $sessionInHall->from,
-                    "2" => $nowDateUtc,
-                ], 
-                403
-            );
+            $nowDateUtc = Carbon::now();      
 
             if($fromDate->isBefore($nowDateUtc)) {
                 return response()->json(
@@ -90,11 +83,27 @@ class BookingController extends Controller
                 );
             }
 
+            if($booking->is_active) {
+                return response()->json(
+                    [
+                        "err" => "already booked!",
+                        "code_err" => "booked",
+                        "value" => $booking->id,
+                    ], 
+                    403
+                );
+            }
 
-
-            $seats = $booking->seats();
-
-            return response()->json(["booking" => $booking, "seats" => $seats]);
+            return response()->json([
+                "id" => $booking->id,
+                "cinema_hall_id" => $cinemaHall->id,
+                "session_hall_id" => $sessionInHall->id,
+                "film_title" => $film->title,
+                "seats_list" => $booking->seat_id_list,
+                "cinema_hall_name" => $cinemaHall->name,
+                "film_session_start" =>  $sessionInHall->from,
+                "summ" =>  $booking->summ
+            ]);
         } catch (Exception $e) {
             return response()->json(
                 ["err" => $e->getMessage()], 
@@ -103,29 +112,48 @@ class BookingController extends Controller
         }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Booking $booking)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, Booking $booking)
     {
-        //
+        if(!$request->get("is_active")) {
+            return response()->json(
+                [
+                    "err" => "invalide activate key",
+                    "code_err" => "invalid_key",
+                    "value" => null,
+                ], 
+                403
+            );
+        }
+
+        if($booking->is_active) {
+            return response()->json(
+                [
+                    "err" => "already booked!",
+                    "code_err" => "booked",
+                    "value" => $booking->id,
+                ], 
+                403
+            );
+        }
+
+        $booking->is_active = true;
+
+        if($booking->save()) {
+            return response()->json(
+                [
+                    "success" => true,
+                    "id" => $booking->id
+                ], 
+                200
+            );
+        }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Booking $booking)
-    {
-        //
-    }
 
     private function checkBooking(Request $request)
     {

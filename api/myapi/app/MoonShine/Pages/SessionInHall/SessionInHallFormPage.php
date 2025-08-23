@@ -166,38 +166,4 @@ class SessionInHallFormPage extends FormPage
 
         return $priceFields;
     }
-
-    /**
-     * Переопределяем метод сохранения, чтобы удалить поля price_*
-     */
-    public function save(Request $request): Model
-    {
-        // Удаляем из запроса все поля, начинающиеся с price_
-        // foreach ($request->all() as $key => $value) {
-        //     if (str_starts_with($key, 'price_')) {
-        //         $request->request->remove($key);
-        //     }
-        // }
-
-        file_put_contents("./test_save.txt", print_r($request->all(), true));
-
-        // Вызываем родительский метод сохранения с очищенным запросом
-        return parent::save($request);
-    }
-
-    /**
-     * Переопределяем метод обновления, чтобы удалить поля price_*
-     */
-    public function update(Request $request, Model $item): Model
-    {
-        // foreach ($request->all() as $key => $value) {
-        //     if (str_starts_with($key, 'price_')) {
-        //         $request->request->remove($key);
-        //     }
-        // }
-
-        file_put_contents("./test_update.txt", print_r($request->all(), true));
-
-        return parent::update($request, $item);
-    }
 }

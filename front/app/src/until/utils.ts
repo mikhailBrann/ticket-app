@@ -30,6 +30,18 @@ type Film = {
   cinema_halls: CinemaHall[];
 };
 
+type Payment = {
+    id: number;
+    cinema_hall_id: number;
+    session_hall_id: number;
+    film_title: string;
+    seats_list: number[];
+    cinema_hall_name: string;
+    film_session_start: string;
+    summ: string;
+}
+
+
 const setFormattedDate = (dateValue: string) => {
     const dateParts = dateValue.split('.');
     const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
@@ -105,12 +117,11 @@ const fetcApi = async(
     data: any = null
 ) => {
     const url = import.meta.env.VITE_API_URL + urlApiPath;
-    const params = {
+    const params: RequestInit = {
         method,
         headers: {
         'Content-Type': 'application/json'
         },
-        body: ''
     };
 
     if(data !== null) {
@@ -126,7 +137,8 @@ export type {
     DateArray,
     SessionInHall,
     CinemaHall,
-    Film
+    Film,
+    Payment
 }
 export {
     setFormattedDate, 

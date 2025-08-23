@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Resources;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Seat;
 use App\Models\Booking;
 use App\MoonShine\Pages\Booking\BookingIndexPage;
 use App\MoonShine\Pages\Booking\BookingFormPage;
 use App\MoonShine\Pages\Booking\BookingDetailPage;
 
+use MoonShine\Contracts\UI\ActionButtonContract;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\Laravel\Pages\Page;
 
@@ -21,6 +22,11 @@ class BookingResource extends ModelResource
     protected string $model = Booking::class;
 
     protected string $title = 'Bookings';
+
+    public function getActiveActions(): array
+    {
+        return ['create', 'view', 'update', 'delete', 'massDelete'];
+    }
     
     /**
      * @return list<Page>

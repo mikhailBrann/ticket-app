@@ -15,4 +15,5 @@ Route::prefix('v1')->group(function () {
     Route::post('booking', [BookingController::class, 'store'])
         ->middleware('check.booking.authorization');
     Route::get('payment/{booking}', [BookingController::class, 'show']);
+    Route::put('payment/{booking}', [BookingController::class, 'update']);
 });

@@ -111,36 +111,36 @@ const CinemaHallPage = () => {
     
     return (
         <>
-            {seatsIsLoaded && <div>Loading...</div>}
-            {sessionInHallError && <div>Error: {sessionInHallError}</div>}
-            {!seatsIsLoaded && (() => {            
-            return(
-                <main>
-                    <section className="buying">
-                        <div className="buying__info">
-                            <div className="buying__info-description">
-                            <h2 className="buying__info-title">{currentSessionInHall?.film?.title}</h2>
-                            <p className="buying__info-start">Начало сеанса: {sessionStart}</p>
-                            <p className="buying__info-hall">{cinemaHall?.name}</p>          
-                            </div>
-                            <div className="buying__info-hint">
-                                <p>Тапните дважды,<br/>чтобы увеличить</p>
-                            </div>
+        {seatsIsLoaded && <div>Loading...</div>}
+        {sessionInHallError && <div>Error: {sessionInHallError}</div>}
+        {!seatsIsLoaded && (() => {            
+        return(
+            <main>
+                <section className="buying">
+                    <div className="buying__info">
+                        <div className="buying__info-description">
+                        <h2 className="buying__info-title">{currentSessionInHall?.film?.title}</h2>
+                        <p className="buying__info-start">Начало сеанса: {sessionStart}</p>
+                        <p className="buying__info-hall">{cinemaHall?.name}</p>          
                         </div>
-                        {seatsList.length > 0 && 
-                            <CinemaHallSheme
-                                onSeatClick={onSeatClick} 
-                                seats={seatsList} 
-                                priceArr={priceList}/>}
-                        <button className="acceptin-button" onClick={onSubmitBooking}>Забронировать</button>
-                    </section>
-                </main>
-            );
-            })()}
-            {fetchBookingErr != false && (
-                <h3>{fetchBookingErr}</h3>
-            )}
-      </>
+                        <div className="buying__info-hint">
+                            <p>Тапните дважды,<br/>чтобы увеличить</p>
+                        </div>
+                    </div>
+                    {seatsList.length > 0 && 
+                        <CinemaHallSheme
+                            onSeatClick={onSeatClick} 
+                            seats={seatsList} 
+                            priceArr={priceList}/>}
+                    <button className="acceptin-button" onClick={onSubmitBooking}>Забронировать</button>
+                </section>
+            </main>
+        );
+        })()}
+        {fetchBookingErr != false && (
+            <h3>{fetchBookingErr}</h3>
+        )}
+        </>
     )
 }
 

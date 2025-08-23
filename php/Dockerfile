@@ -7,8 +7,12 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     apt-transport-https \
     lsb-release \
-    php-pgsql
+    php-pgsql \
+    tzdata
 
+# Установка временной зоны
+RUN ln -snf /usr/share/zoneinfo/Europe/Moscow /etc/localtime && echo "Europe/Moscow" > /etc/timezone
+    
 # Установка последней LTS версии Node.js (включает npm)
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - \
     && apt-get install -y nodejs

@@ -59,8 +59,8 @@ class Booking extends Model
         return $this->belongsTo(SessionInHall::class);
     }
 
-    public function seats()
-    {
-        return Seat::whereIn('id', $this->seat_id_list)->get();
-    }
+    // public function seats()
+    // {
+    //     return Seat::whereIn('id', $this->seat_id_list)->get();
+    // }
 }

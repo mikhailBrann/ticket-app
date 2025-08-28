@@ -1,0 +1,463 @@
+{
+	"info": {
+		"_postman_id": "855a808d-a31a-4283-b088-b2e68e34701d",
+		"name": "Laravel diplom api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "14812450"
+	},
+	"item": [
+		{
+			"name": "films",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{SITE}}/films"
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "{{SITE}}/films"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 28 Aug 2025 13:09:32 GMT"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 1,\n        \"title\": \"Очень славные ублюдки\",\n        \"description\": \"В оригинале фильм называется «Inglourious Bastеrds», хотя грамматически и орфографически правильно было бы написать «The Inglorious Bastards». В качестве заглавия для своей картины Квентин Тарантино взял американское прокатное название фильма Энцо Дж. Кастеллари «Этот проклятый бронепоезд» (итал. Quel maledetto treno blindato), известного в США как «Бесславные ублюдки» — «The Inglorious Bastards», преднамеренно отказавшись от артикля и допустив две орфографические ошибки. Поэтому, чтобы передать замысел автора, стоит переводить название фильма также с ошибками. Например, кинокритик и киновед Андрей Плахов предлагал вариант названия «Безславные ублютки»[16].\\r\\n\\r\\nНа вопрос, почему он допустил орфографические ошибки в названии фильма, сам Тарантино отвечал: «Я никогда этого не стану объяснять»[17]. Но журналисты добились признания: «Почему „ублютки“? Да просто потому, что оно так произносится: „ублютки“»\",\n        \"image\": \"dRPZ3scpLq44Qz7K8VRpsYNB1k4vOqhlrXNNJM7G.jpg\",\n        \"image_url\": \"http://localhost:7633/storage/dRPZ3scpLq44Qz7K8VRpsYNB1k4vOqhlrXNNJM7G.jpg\",\n        \"duration\": \"02:01\",\n        \"session_in_halls\": [\n            {\n                \"id\": 1,\n                \"cinema_hall_id\": 1,\n                \"film_id\": 1,\n                \"from\": \"2025-08-28T13:25:00.000000Z\",\n                \"to\": \"2025-08-28T15:26:00.000000Z\"\n            },\n            {\n                \"id\": 2,\n                \"cinema_hall_id\": 1,\n                \"film_id\": 1,\n                \"from\": \"2025-08-29T20:30:00.000000Z\",\n                \"to\": \"2025-08-29T22:30:00.000000Z\"\n            },\n            {\n                \"id\": 3,\n                \"cinema_hall_id\": 1,\n                \"film_id\": 1,\n                \"from\": \"2025-08-28T23:40:00.000000Z\",\n                \"to\": \"2025-08-28T23:58:00.000000Z\"\n            }\n        ],\n        \"cinema_halls\": [\n            {\n                \"id\": 1,\n                \"name\": \"Мытищи 3D\",\n                \"laravel_through_key\": 1\n            }\n        ]\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "/hall/{hall_id}/session/{session_id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{SITE}}/hall/1/session/3"
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "{{SITE}}/hall/1/session/3"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 28 Aug 2025 13:08:50 GMT"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"cinemaHall\": {\n        \"id\": 1,\n        \"name\": \"Мытищи 3D\",\n        \"seats\": [\n            {\n                \"id\": 1,\n                \"type\": \"vip\",\n                \"row\": 1,\n                \"number\": 1,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 1\n            },\n            {\n                \"id\": 2,\n                \"type\": \"vip\",\n                \"row\": 1,\n                \"number\": 2,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 2\n            },\n            {\n                \"id\": 3,\n                \"type\": \"vip\",\n                \"row\": 1,\n                \"number\": 3,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 3\n            },\n            {\n                \"id\": 4,\n                \"type\": \"vip\",\n                \"row\": 1,\n                \"number\": 4,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 4\n            },\n            {\n                \"id\": 5,\n                \"type\": \"vip\",\n                \"row\": 1,\n                \"number\": 5,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 5\n            },\n            {\n                \"id\": 6,\n                \"type\": \"vip\",\n                \"row\": 1,\n                \"number\": 6,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 6\n            },\n            {\n                \"id\": 7,\n                \"type\": \"vip\",\n                \"row\": 1,\n                \"number\": 7,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 7\n            },\n            {\n                \"id\": 8,\n                \"type\": \"vip\",\n                \"row\": 1,\n                \"number\": 8,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 8\n            },\n            {\n                \"id\": 9,\n                \"type\": \"vip\",\n                \"row\": 1,\n                \"number\": 9,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 9\n            },\n            {\n                \"id\": 10,\n                \"type\": \"regular\",\n                \"row\": 2,\n                \"number\": 1,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 10\n            },\n            {\n                \"id\": 11,\n                \"type\": \"regular\",\n                \"row\": 2,\n                \"number\": 2,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 11\n            },\n            {\n                \"id\": 12,\n                \"type\": \"regular\",\n                \"row\": 2,\n                \"number\": 3,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 12\n            },\n            {\n                \"id\": 13,\n                \"type\": \"regular\",\n                \"row\": 2,\n                \"number\": 4,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 13\n            },\n            {\n                \"id\": 14,\n                \"type\": \"regular\",\n                \"row\": 2,\n                \"number\": 5,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 14\n            },\n            {\n                \"id\": 15,\n                \"type\": \"regular\",\n                \"row\": 2,\n                \"number\": 6,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 15\n            },\n            {\n                \"id\": 16,\n                \"type\": \"regular\",\n                \"row\": 2,\n                \"number\": 7,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 16\n            },\n            {\n                \"id\": 17,\n                \"type\": \"regular\",\n                \"row\": 2,\n                \"number\": 8,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 17\n            },\n            {\n                \"id\": 18,\n                \"type\": \"regular\",\n                \"row\": 2,\n                \"number\": 9,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 18\n            },\n            {\n                \"id\": 19,\n                \"type\": \"regular\",\n                \"row\": 3,\n                \"number\": 1,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 19\n            },\n            {\n                \"id\": 20,\n                \"type\": \"regular\",\n                \"row\": 3,\n                \"number\": 2,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 20\n            },\n            {\n                \"id\": 21,\n                \"type\": \"regular\",\n                \"row\": 3,\n                \"number\": 3,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 21\n            },\n            {\n                \"id\": 22,\n                \"type\": \"regular\",\n                \"row\": 3,\n                \"number\": 4,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 22\n            },\n            {\n                \"id\": 23,\n                \"type\": \"regular\",\n                \"row\": 3,\n                \"number\": 5,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 23\n            },\n            {\n                \"id\": 24,\n                \"type\": \"regular\",\n                \"row\": 3,\n                \"number\": 6,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 24\n            },\n            {\n                \"id\": 25,\n                \"type\": \"regular\",\n                \"row\": 3,\n                \"number\": 7,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 25\n            },\n            {\n                \"id\": 26,\n                \"type\": \"regular\",\n                \"row\": 3,\n                \"number\": 8,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 26\n            },\n            {\n                \"id\": 27,\n                \"type\": \"regular\",\n                \"row\": 3,\n                \"number\": 9,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 27\n            },\n            {\n                \"id\": 28,\n                \"type\": \"regular\",\n                \"row\": 4,\n                \"number\": 1,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 28\n            },\n            {\n                \"id\": 29,\n                \"type\": \"regular\",\n                \"row\": 4,\n                \"number\": 2,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 29\n            },\n            {\n                \"id\": 30,\n                \"type\": \"regular\",\n                \"row\": 4,\n                \"number\": 3,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 30\n            },\n            {\n                \"id\": 31,\n                \"type\": \"regular\",\n                \"row\": 4,\n                \"number\": 4,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 31\n            },\n            {\n                \"id\": 32,\n                \"type\": \"regular\",\n                \"row\": 4,\n                \"number\": 5,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 32\n            },\n            {\n                \"id\": 33,\n                \"type\": \"regular\",\n                \"row\": 4,\n                \"number\": 6,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 33\n            },\n            {\n                \"id\": 34,\n                \"type\": \"regular\",\n                \"row\": 4,\n                \"number\": 7,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 34\n            },\n            {\n                \"id\": 35,\n                \"type\": \"regular\",\n                \"row\": 4,\n                \"number\": 8,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 35\n            },\n            {\n                \"id\": 36,\n                \"type\": \"regular\",\n                \"row\": 4,\n                \"number\": 9,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 36\n            },\n            {\n                \"id\": 37,\n                \"type\": \"regular\",\n                \"row\": 5,\n                \"number\": 1,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 37\n            },\n            {\n                \"id\": 38,\n                \"type\": \"regular\",\n                \"row\": 5,\n                \"number\": 2,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 38\n            },\n            {\n                \"id\": 39,\n                \"type\": \"regular\",\n                \"row\": 5,\n                \"number\": 3,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 39\n            },\n            {\n                \"id\": 40,\n                \"type\": \"regular\",\n                \"row\": 5,\n                \"number\": 4,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 40\n            },\n            {\n                \"id\": 41,\n                \"type\": \"regular\",\n                \"row\": 5,\n                \"number\": 5,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 41\n            },\n            {\n                \"id\": 42,\n                \"type\": \"regular\",\n                \"row\": 5,\n                \"number\": 6,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 42\n            },\n            {\n                \"id\": 43,\n                \"type\": \"regular\",\n                \"row\": 5,\n                \"number\": 7,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 43\n            },\n            {\n                \"id\": 44,\n                \"type\": \"regular\",\n                \"row\": 5,\n                \"number\": 8,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 44\n            },\n            {\n                \"id\": 45,\n                \"type\": \"regular\",\n                \"row\": 5,\n                \"number\": 9,\n                \"cinema_hall_id\": 1,\n                \"created_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"updated_at\": \"2025-08-18T10:23:38.000000Z\",\n                \"seat_number\": 45\n            }\n        ],\n        \"prices\": [\n            {\n                \"id\": 5,\n                \"cinema_hall_id\": 1,\n                \"session_in_hall_id\": 3,\n                \"seat_type\": \"vip\",\n                \"price\": \"200.00000\",\n                \"created_at\": \"2025-08-19T07:38:18.000000Z\",\n                \"updated_at\": \"2025-08-19T07:38:18.000000Z\"\n            },\n            {\n                \"id\": 6,\n                \"cinema_hall_id\": 1,\n                \"session_in_hall_id\": 3,\n                \"seat_type\": \"regular\",\n                \"price\": \"150.00000\",\n                \"created_at\": \"2025-08-19T07:38:18.000000Z\",\n                \"updated_at\": \"2025-08-19T07:38:18.000000Z\"\n            }\n        ]\n    },\n    \"sessionInHall\": {\n        \"id\": 3,\n        \"film_id\": 1,\n        \"cinema_hall_id\": 1,\n        \"created_at\": \"2025-08-19T07:38:18.000000Z\",\n        \"updated_at\": \"2025-08-28T10:34:08.000000Z\",\n        \"from\": \"2025-08-28T23:40:00.000000Z\",\n        \"to\": \"2025-08-28T23:58:00.000000Z\",\n        \"film\": {\n            \"id\": 1,\n            \"title\": \"Очень славные ублюдки\",\n            \"image_url\": null,\n            \"duration\": \"02:00\",\n            \"session_in_halls\": [\n                {\n                    \"id\": 2,\n                    \"film_id\": 1,\n                    \"cinema_hall_id\": 1,\n                    \"created_at\": \"2025-08-19T07:30:54.000000Z\",\n                    \"updated_at\": \"2025-08-25T17:33:00.000000Z\",\n                    \"from\": \"2025-08-29T20:30:00.000000Z\",\n                    \"to\": \"2025-08-29T22:30:00.000000Z\"\n                },\n                {\n                    \"id\": 1,\n                    \"film_id\": 1,\n                    \"cinema_hall_id\": 1,\n                    \"created_at\": \"2025-08-18T10:25:16.000000Z\",\n                    \"updated_at\": \"2025-08-25T17:33:13.000000Z\",\n                    \"from\": \"2025-08-28T13:25:00.000000Z\",\n                    \"to\": \"2025-08-28T15:26:00.000000Z\"\n                },\n                {\n                    \"id\": 3,\n                    \"film_id\": 1,\n                    \"cinema_hall_id\": 1,\n                    \"created_at\": \"2025-08-19T07:38:18.000000Z\",\n                    \"updated_at\": \"2025-08-28T10:34:08.000000Z\",\n                    \"from\": \"2025-08-28T23:40:00.000000Z\",\n                    \"to\": \"2025-08-28T23:58:00.000000Z\"\n                }\n            ]\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "booking",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"film_id\": 1,\n    \"seat_id_list\": [\n        1,\n        11,\n        21\n    ],\n    \"cinema_hall_id\": 1,\n    \"session_in_hall_id\": 1,\n    \"summ\": 200\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{SITE}}/booking"
+			},
+			"response": []
+		},
+		{
+			"name": "payment/{booking}",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"is_active\": true,\n    \"url_value\": \"http://localhost:7636/ticket/63\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{SITE}}/payment/21"
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"is_active\": true,\n    \"url_value\": \"http://localhost:7636/ticket/63\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{SITE}}/payment/21"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 28 Aug 2025 13:05:46 GMT"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"success\": true,\n    \"id\": 64\n}"
+				},
+				{
+					"name": "is booked(failure)",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"is_active\": true,\n    \"url_value\": \"http://localhost:7636/ticket/63\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{SITE}}/payment/21"
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 28 Aug 2025 13:06:47 GMT"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"err\": \"already booked!\",\n    \"code_err\": \"booked\",\n    \"value\": 21\n}"
+				}
+			]
+		},
+		{
+			"name": "payment/{booking}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{SITE}}/payment/20"
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "{{SITE}}/payment/21"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 28 Aug 2025 12:54:04 GMT"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 21,\n    \"cinema_hall_id\": 1,\n    \"session_hall_id\": 3,\n    \"film_title\": \"Очень славные ублюдки\",\n    \"seats_list\": [\n        14\n    ],\n    \"cinema_hall_name\": \"Мытищи 3D\",\n    \"film_session_start\": \"2025-08-28T23:40:00.000000Z\",\n    \"summ\": \"150.00\"\n}"
+				},
+				{
+					"name": "is booked(failure)",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "{{SITE}}/payment/20"
+					},
+					"status": "Forbidden",
+					"code": 403,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 28 Aug 2025 12:54:56 GMT"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"err\": \"already booked!\",\n    \"code_err\": \"booked\",\n    \"value\": 20\n}"
+				}
+			]
+		},
+		{
+			"name": "/ticket/{ticket_id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "{{SITE}}/ticket/63"
+			},
+			"response": [
+				{
+					"name": "success",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": "{{SITE}}/ticket/63"
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx/1.29.1"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "X-Powered-By",
+							"value": "PHP/8.3.14"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "no-cache, private"
+						},
+						{
+							"key": "Date",
+							"value": "Thu, 28 Aug 2025 12:51:25 GMT"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "*"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 63,\n    \"image\": \"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAUAAAAFAAQMAAAD3XjfpAAAABlBMVEUEAgT8/vxJvsdeAAAACXBIWXMAAA7EAAAOxAGVKw4bAAABtUlEQVRoge2ZS27DMAxEmZWP4aPKR9UxvAob8Sc5QYugRckshgsjMp+yGZAaysRvBgEE+AfwThYb87HLy5OodbKHRANYATbJ9u2xZR/MWB30WLa+SeoOsAhUuYaERDfbsvzaABaDIuFNNaNdEgA/AuRVPT5/0hpgDhhtzyuMQsJv+iPAFNBis2paH54DWAA+RfQ+bYARANNBk9DkUuGMOcaWQ/cBLAAlIzPP8+CzKAqwANRplISOwWf3k+ogOZUAloAjRMLr4HNY4moVACaCm90O+ODD7um8ATLAfND8dBvNTg4kssHH1Iu2B7AAnNU0G+Bse+T2GmAqONanZ3pUWPe2J9oCLABDwqdB1MW8tD2AiaAz7NVkMWee1SoAzAS1fEI9PZqm0da/AVgCiiNgd209TiVpez0GH4DZoAinVtrv1tw+RAJgOjjDGuClC5qRAFgA+mWBMeanKTzdUlwAk8EmAvZ5YyBL8qtPounDAeaC8lJnnljy1BZgPdiiAS7GTl8BLAUXUx03BvziKQCmgaKRDT5mr/U7m2y5DD4AM0ELlTA8tmzWBPOLpwD4/+CbARDg78EvsfptlSWa/ycAAAAASUVORK5CYII=\",\n    \"film_title\": \"Очень славные ублюдки\",\n    \"seats_list\": [\n        1,\n        2\n    ],\n    \"cinema_hall_name\": \"Мытищи 3D\",\n    \"film_session_start\": \"2025-08-28T23:40:00.000000Z\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "SITE",
+			"value": "http://localhost:7633/api/v1",
+			"type": "string"
+		}
+	]
+}

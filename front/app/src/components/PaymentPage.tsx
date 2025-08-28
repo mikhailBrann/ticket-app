@@ -24,7 +24,15 @@ const PaymentPage = () => {
         setPaymentIsLoaded(false);
     }; 
     const sendBooking = async () => {
-        const result = await fetcApi("/payment/" + payment_id, "PUT", {"is_active": true});
+        const ticketUrlToQRCode =  `${window.location.origin}/ticket/`;
+        const result = await fetcApi(
+            "/payment/" + payment_id, 
+            "PUT", 
+            {
+                "is_active": true,
+                "url_value": ticketUrlToQRCode
+            }
+        );
 
         if(result?.code_err == 'booked') {
             setFetchPaymentErr(result?.err);

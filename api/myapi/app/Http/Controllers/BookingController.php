@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Handlers\QRCodeHandler;
+use App\Models\Ticket;
 use Arr;
 use Carbon\Carbon;
 use Exception;
@@ -10,22 +12,6 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -112,8 +98,6 @@ class BookingController extends Controller
         }
     }
 
-
-
     /**
      * Update the specified resource in storage.
      */
@@ -123,6 +107,17 @@ class BookingController extends Controller
             return response()->json(
                 [
                     "err" => "invalide activate key",
+                    "code_err" => "invalid_key",
+                    "value" => null,
+                ], 
+                403
+            );
+        }
+
+        if(!$request->get("url_value")) {
+            return response()->json(
+                [
+                    "err" => "invalide url_value key",
                     "code_err" => "invalid_key",
                     "value" => null,
                 ], 
@@ -141,19 +136,54 @@ class BookingController extends Controller
             );
         }
 
-        $booking->is_active = true;
+        $ticket = $this->activateBooking(
+            $booking, 
+            $request->get("url_value")
+        );
 
         if($booking->save()) {
             return response()->json(
                 [
                     "success" => true,
-                    "id" => $booking->id
+                    "id" => $ticket->id
                 ], 
                 200
             );
         }
     }
 
+    private function activateBooking(Booking $booking, string $codeUrl): Ticket
+    {
+        $booking->is_active = true;
+        $booking->save();
+
+        $checkTicket = $this->checkTiket($booking->id);
+
+        if($checkTicket !== null) {
+            return $checkTicket;
+        }
+
+        $ticket = Ticket::create([
+            "booking_id" => $booking->id,
+            "image" => ""
+        ]);
+        $qrCode = (new QRCodeHandler(
+            $codeUrl . $ticket->id
+        ))->getCode();
+
+        $ticket->image = $qrCode;
+        $ticket->save();
+        
+        return $ticket;
+    }
+
+    private function checkTiket(int $bookingId)
+    {
+        $result = Ticket::where("booking_id", $bookingId)
+            ->first() ?? null;
+
+        return $result;
+    }
 
     private function checkBooking(Request $request)
     {
@@ -170,12 +200,8 @@ class BookingController extends Controller
                     $query->orWhereRaw("seat_id_list @> ?", [json_encode([$seatId])]);
                 }
             })
-            ->first();
+            ->first() ?? null;
         
-        if ($booking) {
-            return $booking;
-        }
-        
-        return null;
+        return $booking;
     }
 }

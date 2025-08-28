@@ -41,6 +41,16 @@ type Payment = {
     summ: string;
 }
 
+type Ticket = {
+    id: number;
+    image: string;
+    film_title: string;
+    seats_list: number[];
+    cinema_hall_name: string;
+    film_session_start: string;
+    summ: string;
+}
+
 
 const setFormattedDate = (dateValue: string) => {
     const dateParts = dateValue.split('.');
@@ -138,7 +148,8 @@ export type {
     SessionInHall,
     CinemaHall,
     Film,
-    Payment
+    Payment,
+    Ticket
 }
 export {
     setFormattedDate, 

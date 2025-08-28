@@ -1,19 +1,41 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { fetcApi, getTimeFromDate } from '../until/utils.ts';
-import type {Payment} from '../until/utils.ts';
+import type { Ticket } from '../until/utils.ts';
+
 
 const TicketPage = () => {
-    const { payment_id } = useParams();
-    const [payment, setPayment] = useState<null|Payment>(null);
-    const [paymentIsLoaded, setPaymentIsLoaded] = useState(false);
-    const [fetchPaymentErr, setFetchPaymentErr] = useState(false);
-    const navigate = useNavigate();
+    const { ticket_id } = useParams();
+    const [ticket, setTicket] = useState<null|Ticket>(null);
+    const [ticketIsLoaded, setTicketIsLoaded] = useState(false);
+    const [fetchTicketErr, setFetchTicketErr] = useState(false);
+
+    const _fetchData = async () => {
+        const result = await fetcApi("/ticket/" + ticket_id);
+        
+        if(result?.id) {
+            setTicket(result);
+        }
+
+        if(result?.code_err) {
+            setFetchTicketErr(result?.err);
+        }
+
+        setTicketIsLoaded(false);
+    };
+    
+    useEffect(() => {
+        _fetchData();
+    }, [ticketIsLoaded]);
 
     return (
         <>
-        {paymentIsLoaded && <div>Loading...</div>}
-        {!paymentIsLoaded && !fetchPaymentErr && (() => {
+        {ticketIsLoaded && <div>Loading...</div>}
+        {!ticketIsLoaded && !fetchTicketErr && (() => {
+            const seatsToString = ticket?.seats_list ? 
+                Array.from(ticket?.seats_list).join(",") : "";
+            const from = ticket?.film_session_start ? 
+                getTimeFromDate(ticket?.film_session_start) : "";
 
             return(
                 <main>
@@ -24,12 +46,12 @@ const TicketPage = () => {
                     </header>
                     
                     <div className="ticket__info-wrapper">
-                        <p className="ticket__info">На фильм: <span className="ticket__details ticket__title">Звёздные войны XXIII: Атака клонированных клонов</span></p>
-                        <p className="ticket__info">Места: <span className="ticket__details ticket__chairs">6, 7</span></p>
-                        <p className="ticket__info">В зале: <span className="ticket__details ticket__hall">1</span></p>
-                        <p className="ticket__info">Начало сеанса: <span className="ticket__details ticket__start">18:30</span></p>
+                        <p className="ticket__info">На фильм: <span className="ticket__details ticket__title">{ticket?.film_title}</span></p>
+                        <p className="ticket__info">Места: <span className="ticket__details ticket__chairs">{seatsToString}</span></p>
+                        <p className="ticket__info">В зале: <span className="ticket__details ticket__hall">{ticket?.cinema_hall_name}</span></p>
+                        <p className="ticket__info">Начало сеанса: <span className="ticket__details ticket__start">{from}</span></p>
 
-                        <img className="ticket__info-qr" src="i/qr-code.png"/>
+                        <img className="ticket__info-qr" src={ticket?.image}/>
 
                         <p className="ticket__hint">Покажите QR-код нашему контроллеру для подтверждения бронирования.</p>
                         <p className="ticket__hint">Приятного просмотра!</p>
@@ -38,8 +60,8 @@ const TicketPage = () => {
                 </main>
             );
         })()}
-        {fetchPaymentErr != false && (
-            <h3>{fetchPaymentErr}</h3>
+        {fetchTicketErr != false && (
+            <h3>{fetchTicketErr}</h3>
         )}
         </>
     );

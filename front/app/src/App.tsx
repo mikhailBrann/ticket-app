@@ -15,7 +15,7 @@ function App() {
             <Route path="/" element={<FilmPage/>} />
             <Route path="/hall/:hall_id/session/:session_id" element={<CinemaHallPage/>} />
             <Route path="/payment/:payment_id" element={<PaymentPage/>} />
-            <Route path="/ticket/:payment_id" element={<TicketPage/>} />
+            <Route path="/ticket/:ticket_id" element={<TicketPage/>} />
       </Routes>
     </Router> 
     </>

@@ -27,4 +27,4 @@ RUN node -v && npm -v
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
-WORKDIR /var/www
+WORKDIR /var/www/myapi

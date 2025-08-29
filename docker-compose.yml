@@ -21,7 +21,7 @@ services:
         container_name: ${APP_CONTAINER_NAME}_php
         ports:
             - $API_PORT:$API_PORT
-        working_dir: /var/www/
+        working_dir: /var/www/myapi
         volumes:
             - ./api:/var/www
             - ./php/config/php.ini:/opt/bitnami/php/lib/php.ini

@@ -7,3 +7,5 @@ RUN cp /usr/share/zoneinfo/Europe/Moscow /etc/localtime && echo "Europe/Moscow" 
 # Предполагая, что вы запускаете сборку из корня проекта
 COPY ./app /app
 WORKDIR /app
+
+RUN npm install

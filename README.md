@@ -1,29 +1,55 @@
 ## Перед запуском
-создать файл .env и заполнить его данными
+копируем файл окружения
 
 ```bash
-APP_CONTAINER_NAME=ticket-app
-API_NGINX_PORT=7633
-API_PORT=5173
-POSTGRESS_DB_PORT=5429
-POSTGRES_USER=ticket-app_user
-POSTGRES_PASSWORD=ticket-app_user
-POSTGRES_DB=ticket-app
-POSTGRES_HOST=database
-
-# laravel setup start
-DB_CONNECTION=pgsql
-DB_HOST=database
-DB_PORT=5432
-DB_DATABASE=ticket-app
-DB_USERNAME=ticket-app_user
-DB_PASSWORD=ticket-app_user
-# laravel setup end
+cp .makeenv .env
 ```
 
-## админ-панель
+## Запускаем сборку
 
-для админ панели используется панель [moonshine](https://moonshine-laravel.com/ru/docs/3.x/index), доступно по url: /admin
-создать пользователя
+```bash
+docker-compose up -d --build
+```
+
+## Первый запуск backend контейнера
+
+```bash
+docker exec -it ticket-app_php bash
+
+#внутри контейнера
+php artisan migrate
+
+#создание админ-пользователя для админки
 php artisan moonshine:user
+```
+далее админка будет доступна по адресу: [админка](http://localhost:7633/admin/login)
 
+## Запуск frontend контейнера
+
+```bash
+docker exec -it ticket-app_front bash
+
+#запуск сервера разработки
+npm run dev
+```
+далее фронт будет доступен по адресу: [front](http://localhost:7636)
+
+ссылка на коллекцию запросов: [postman](./api.postman_collection.json)
+
+## стек
+### админка
+
+для админ панели используется панель [moonshine](https://moonshine-laravel.com/ru/docs/3.x/index), 
+
+доступно по url: /admin
+
+### backend
+php 8.3
+laravel 12
+nginx
+
+### frontend
+react + ts
+
+### database
+postgres 11

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
 use App\Models\CinemaHall;
 use App\Models\Film;
 use App\Models\SessionInHall;
@@ -22,11 +23,16 @@ class CinemaHallController extends Controller
             ])
             ->where('id', $cinemaHall->id)
             ->first();
+        $isBookingseatIdLists = Booking::where('is_active', true)
+            ->where('session_in_hall_id', 3)
+            ->pluck('seat_id_list');
+        $allBookingSeatIds = $isBookingseatIdLists->flatten()->all() ?? [];
         
 
         return response()->json([
             "cinemaHall" => $cinemaHallResult,
             "sessionInHall" => $sessionInHallResult,
+            "bookedSeatsList" => $allBookingSeatIds
         ]);
     }
 }

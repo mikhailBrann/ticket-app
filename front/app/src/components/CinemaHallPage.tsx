@@ -6,6 +6,22 @@ import { fetcApi, getTimeFromDate } from '../until/utils.ts';
 import CinemaHallSheme from './CinemaHallSheme.tsx';
 import { useNavigate } from 'react-router-dom';
 
+type BookedSeatsListType = Array<number>;
+type CinemaHallType = {
+    id: number;
+    name: string;
+    prices: Array<any>;
+    seats: Array<any>
+};
+type SessionInHallType = {
+    id: number;
+    film_id: number;
+    cinema_hall_id: number;
+    from: string;
+    to: string;
+    film: any
+}
+
 const CinemaHallPage = () => {
     const { hall_id, session_id } = useParams();
     const [seatsList, setSeatsList] = useState([]);
@@ -18,8 +34,9 @@ const CinemaHallPage = () => {
         sessionInHall,
         sessionInHallError
     } = useAppSelector((state) => state.sessionHall);
-    const cinemaHall = sessionInHall?.cinemaHall;
-    const currentSessionInHall = sessionInHall?.sessionInHall;
+    const cinemaHall = sessionInHall?.cinemaHall ?? {} as CinemaHallType;
+    const currentSessionInHall = sessionInHall?.sessionInHall ?? {} as SessionInHallType;
+    const bookedSeatsList = sessionInHall?.bookedSeatsList ?? [] as BookedSeatsListType;
     const sessionStart = currentSessionInHall?.from ? 
       getTimeFromDate(currentSessionInHall?.from) : "";
 
@@ -87,10 +104,14 @@ const CinemaHallPage = () => {
             cinemaHall.seats.forEach((seat: any) => {
                 const rowIndex = seat.row ? seat.row - 1 : 0;
                 const findPrice = updatedPriceList.find((elem: any) => elem?.seat_type === seat?.type) ?? false;
+                const isBooked = bookedSeatsList.includes(seat.seat_number);
+                const isChange = false;
+                const price = findPrice ? findPrice.price : undefined;
                 const seatWithPrice = {
                     ...seat,
-                    price: findPrice ? findPrice.price : undefined,
-                    isChange: false
+                    price,
+                    isChange,
+                    isBooked
                 };
 
                 if (!(rowIndex in seats)) {

@@ -49,19 +49,11 @@ final class MoonShineLayout extends CompactLayout
     {
         return [
             ...parent::menu(),
-            // MenuItem::make(
-            //     static fn () => __('moonshine::ui.resource.admins_title'),
-            //     \App\MoonShine\Resources\MoonShineUserResource::class
-            // ),
-            // MenuItem::make(
-            //     static fn () => __('moonshine::ui.resource.role_title'),
-            //     \App\MoonShine\Resources\MoonShineUserRoleResource::class
-            // ),
 
             MenuItem::make('Кинозалы', CinemaHallResource::class),
             MenuItem::make('Сеансы', SessionInHallResource::class),
             MenuItem::make('Фильмы', FilmResource::class),
-            MenuItem::make('Bookings', BookingResource::class),
+            MenuItem::make('Бронированние', BookingResource::class),
         ];
     }
 
@@ -71,8 +63,6 @@ final class MoonShineLayout extends CompactLayout
     protected function colors(ColorManagerContract $colorManager): void
     {
         parent::colors($colorManager);
-
-        // $colorManager->primary('#00000');
     }
 
     public function build(): Layout

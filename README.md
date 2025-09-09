@@ -1,9 +1,3 @@
-## Перед запуском
-копируем файл окружения
-
-```bash
-cp .makeenv .env
-```
 
 ## Запускаем сборку
 
@@ -17,6 +11,7 @@ docker-compose up -d --build
 docker exec -it ticket-app_php bash
 
 #внутри контейнера
+php composer install
 php artisan migrate
 
 #создание админ-пользователя для админки

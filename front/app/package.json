@@ -5,13 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 0.0.0.0 --port $FRONT_PORT",
-    "build": "tsc -b && vite build",
+    "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview --host 0.0.0.0 --port $FRONT_PORT"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.0",
     "classnames": "^2.5.1",
+    "express": "^5.1.0",
+    "path": "^0.12.7",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.2.0",

@@ -56,7 +56,7 @@ export const SessionHallSlice = createSliceWithThunk({
 
                     return await response.json();
                 } catch (error) {
-                    return rejectWithValue(error);
+                    return rejectWithValue(error?.message);
                 }
             },
             {

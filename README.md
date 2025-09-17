@@ -21,13 +21,7 @@ php artisan moonshine:user
 
 ## Запуск frontend контейнера
 
-```bash
-docker exec -it ticket-app_front bash
-
-#запуск сервера разработки
-npm run dev
-```
-далее фронт будет доступен по адресу: [front](http://localhost:7636)
+фронт собирается автоматический и будет доступен по адресу: [front](http://localhost:3847)
 
 ссылка на коллекцию запросов: [postman](./api.postman_collection.json)
 

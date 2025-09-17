@@ -56,11 +56,14 @@ services:
           dockerfile: Dockerfile
         container_name: ${APP_CONTAINER_NAME}_front
         ports:
-            - $FRONT_PORT:$FRONT_PORT
+            - 3847:$FRONT_PORT
         volumes:
-            - ./front/app:/app
+            - ./front/app/src:/app/src
+            - ./front/app/server.js:/app/server.js
+            - ./front/app/package.json:/app/package.json
         restart: always
-        command: tail -f /dev/null
+        # command: npm run build && npm run start-server && tail -f /dev/null
+        command: npm run preview
         env_file:
             - .env
         networks:

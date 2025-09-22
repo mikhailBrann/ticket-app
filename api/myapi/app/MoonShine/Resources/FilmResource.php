@@ -56,6 +56,9 @@ class FilmResource extends ModelResource
                     ->required(),
                 Textarea::make('Описание фильма', 'description')
                     ->required(),
+                Text::make('Продолжительность', 'duration')
+                    ->setAttribute('type', 'time')
+                    ->required(),
                 Image::make('Постер', 'image')
                     ->disk('public'),
             ]),

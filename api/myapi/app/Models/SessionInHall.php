@@ -16,14 +16,16 @@ class SessionInHall extends Model
 
     protected $fillable = [
         'from',
-        'to',
         'cinema_hall_id',
         'film_id',
     ];
 
     protected $casts = [
         'from' => 'datetime',
-        'to' => 'datetime',
+    ];
+
+    protected $appends = [
+        'to',
     ];
 
     public function film(): BelongsTo
@@ -44,6 +46,24 @@ class SessionInHall extends Model
                 Date::parse($this->to)->format('H:i');
         }
         return '';
+    }
+
+    public function getToAttribute()
+    {
+        if (!$this->from || (!$this->film || !$this->film->duration)) {
+            return null;
+        }
+
+        $fromDate = Date::parse($this->from);
+        [$hours, $minutes] = explode(
+            ':', 
+            $this->film->duration
+        );
+
+        $toDate = $fromDate->addHours((int)$hours)
+            ->addMinutes((int)$minutes);
+
+        return $toDate->format('Y-m-d H:i:s');
     }
 
     public function getSessionDateFormattedAttribute()

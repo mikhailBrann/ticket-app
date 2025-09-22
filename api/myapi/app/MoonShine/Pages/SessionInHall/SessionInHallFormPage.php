@@ -87,10 +87,6 @@ class SessionInHallFormPage extends FormPage
                     ->required()
                     ->withTime()
                     ->format('Y-m-d H:i:s'),
-                Date::make('Окончание сеанса','to')
-                    ->required()
-                    ->withTime()
-                    ->format('Y-m-d H:i:s'),
                 Select::make('Кинозал', 'cinema_hall_id')
                     ->required()
                     ->options(

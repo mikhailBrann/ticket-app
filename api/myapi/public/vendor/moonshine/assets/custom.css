@@ -1,0 +1,12 @@
+
+.card-category .card-photo {
+    position: relative;
+    min-height: 45rem;
+    display: flex;
+}
+
+.card-category .card-photo img {
+    object-fit: contain;
+    width: auto;
+    height: auto;
+}

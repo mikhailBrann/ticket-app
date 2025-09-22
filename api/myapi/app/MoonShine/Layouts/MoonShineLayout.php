@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Layouts;
 
+use MoonShine\AssetManager\Css;
 use MoonShine\Laravel\Layouts\CompactLayout;
 use MoonShine\ColorManager\ColorManager;
 use MoonShine\Contracts\ColorManager\ColorManagerContract;
@@ -42,6 +43,7 @@ final class MoonShineLayout extends CompactLayout
     {
         return [
             ...parent::assets(),
+            Css::make('/vendor/moonshine/assets/custom.css')->defer()
         ];
     }
 

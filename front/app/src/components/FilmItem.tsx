@@ -1,5 +1,6 @@
 import { getTimeFromDate, type Film } from "../until/utils";
-import uniqid from 'uniqid';
+// import uniqid from 'uniqid';
+import { v4 as uuidv4 } from 'uuid';
 
 
 const FilmItem = (film: Film) => {
@@ -33,17 +34,17 @@ const FilmItem = (film: Film) => {
                     ?? null;
 
                 return (
-                    <div className="movie-seances__hall" key={uniqid()}>
+                    <div className="movie-seances__hall" key={uuidv4()}>
                         <h3 className="movie-seances__hall-title">{hall.name}</h3>
                         {sessionHallArr && (
-                            <ul className="movie-seances__list" key={uniqid()}>
+                            <ul className="movie-seances__list" key={uuidv4()}>
                                 {sessionHallArr.map(sessionElem => {
                                     const dateNow = new Date();
                                     const dateFrom = new Date(sessionElem.from.replace('Z', ''));
 
                                     if (dateNow > dateFrom) {
                                         return (
-                                            <li className="movie-seances__time-block" key={uniqid()}>
+                                            <li className="movie-seances__time-block" key={uuidv4()}>
                                                 <span className="movie-seances__time" 
                                                     style={{ opacity: 0.5, cursor: 'none'}}>
                                                     {getTimeFromDate(sessionElem.from)}
@@ -53,7 +54,7 @@ const FilmItem = (film: Film) => {
                                     }
 
                                     return (
-                                        <li className="movie-seances__time-block" key={uniqid()}>
+                                        <li className="movie-seances__time-block" key={uuidv4()}>
                                             <a className="movie-seances__time" 
                                             href={"/hall/" + hall.id + "/session/" + sessionElem.id}>
                                                 {getTimeFromDate(sessionElem.from)}

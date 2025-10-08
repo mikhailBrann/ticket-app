@@ -24,7 +24,7 @@ services:
         working_dir: /var/www/myapi
         volumes:
             - ./api:/var/www
-            - ./php/config/php.ini:/opt/bitnami/php/lib/php.ini
+            - ./php/config/php.ini:/usr/local/etc/php/php.ini
         env_file:
             - .env
         depends_on:
@@ -57,6 +57,7 @@ services:
         container_name: ${APP_CONTAINER_NAME}_front
         ports:
             - 3847:$FRONT_PORT
+            - $FRONT_DEV_PORT:$FRONT_DEV_PORT
         volumes:
             - ./front/app/src:/app/src
             - ./front/app/server.js:/app/server.js

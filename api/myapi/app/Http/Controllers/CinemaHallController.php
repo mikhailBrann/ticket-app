@@ -24,7 +24,7 @@ class CinemaHallController extends Controller
             ->where('id', $cinemaHall->id)
             ->first();
         $isBookingseatIdLists = Booking::where('is_active', true)
-            ->where('session_in_hall_id', 3)
+            ->where('session_in_hall_id', $sessionInHall->id)
             ->pluck('seat_id_list');
         $allBookingSeatIds = $isBookingseatIdLists->flatten()->all() ?? [];
         

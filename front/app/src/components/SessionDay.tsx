@@ -1,4 +1,5 @@
-import uniqid from 'uniqid';
+// import uniqid from 'uniqid';
+import { v4 as uuidv4 } from 'uuid';
 import classNames from 'classnames';
 import { useState, useEffect } from 'react';
 import { useAppSelector, useAppDispatch } from '../hooks/defaultHook.tsx';
@@ -83,7 +84,7 @@ const SessionDay = () => {
                             })
                         } 
                         href="#"
-                        key={uniqid()}
+                        key={uuidv4()}
                         data-value={ item.value }
                         onClick={setDate}>
                         <span className="page-nav__day-week">{ item.day_text }</span>

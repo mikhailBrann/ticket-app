@@ -104,7 +104,7 @@ const CinemaHallPage = () => {
             cinemaHall.seats.forEach((seat: any) => {
                 const rowIndex = seat.row ? seat.row - 1 : 0;
                 const findPrice = updatedPriceList.find((elem: any) => elem?.seat_type === seat?.type) ?? false;
-                const isBooked = bookedSeatsList.includes(seat.seat_number);
+                const isBooked = bookedSeatsList.includes(seat.id);
                 const isChange = false;
                 const price = findPrice ? findPrice.price : undefined;
                 const seatWithPrice = {
